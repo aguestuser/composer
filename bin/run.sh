@@ -3,7 +3,7 @@
 # remember where we are!
 cd ../../
 
-# run `indake-receiver`
+# run `intake-receiver`
 babel-node intake-receiver/app.js &
   # run `intake-form`
   cd intake-form

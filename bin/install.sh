@@ -8,12 +8,12 @@ baseDir=`pwd`
 # install `intake-form`
 git clone git@github.com:crisisbox/intake-form.git
 cd intake-form
-npm install
+./install.sh
 
 # install `intake-receiver`
 cd ${baseDir}
 git clone git@github.com:crisisbox/intake-receiver.git
 cd intake-receiver
-npm install
+./install.sh
 
 popd
