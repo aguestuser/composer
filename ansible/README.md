@@ -2,11 +2,27 @@
 
 In ansible we use one or many "control machines" to provision "managed nodes". This guide assumes you are using your laptop as a control machine on a newly created box on eclips.is with a root user and a known IP address.
 
+# 0. Creating managed node
+
+* login to eclips.is with following info:
+
+```
+url: https://portal.eclips.is
+username: whereat.admin@riseup.net
+password: <REDACTED>
+```
+* click "cloud managment"
+* click "add instance"
+* make a debian jessie box
+* suggested specs: 4gb ram, 2 cores, 40gb HD
+
+* **TODO:** accomplish the above via the [eclips.is api](https://portal.eclips.is/portal/cloud/ApiDoc#/default)
+
 # 1. Enabling ssh access
 
 # On managed node:
 
-* ssh into box as root (no password required if using eclips.is)
+* ssh into box created in step 0 as root (or use the console that pops up after creating box)
 * create a user for yourself with:
 
 ``` shell
