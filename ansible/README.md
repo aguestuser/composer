@@ -142,3 +142,77 @@ $ ansible all -m ping
 }
 
 ```
+
+# 4. Provision a box to run concourse (TODO)
+
+The following steps are required to manually provision a box to run [concourse.ci](https://concourse.ci/introduction.html). Let's write a [playbook](http://docs.ansible.com/ansible/playbooks_intro.html) to do it with ansible instead!
+
+* figure out which version of the linux kernel you're running:
+
+``` shell
+uname -a
+```
+
+* reinstall linux kernel to enable `iptables` modules necessary to run docker:
+
+(assuming the above returned `linux-image-3.16.0-4`):
+
+``` shell
+apt install --reinstall linux-image-3.16.0-4
+```
+
+* to install docker (as per [these instructions](https://docs.docker.com/engine/installation/linux/debian/#/install-docker)):
+
+``` shell
+sudo su
+
+apt install -y --no-install-recommends \
+     apt-transport-https \
+     ca-certificates \
+     curl \
+     software-properties-common
+
+curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
+add-apt-repository \
+       "deb https://apt.dockerproject.org/repo/ \
+       debian-$(lsb_release -cs) \
+       main"
+apt update
+apt -y install docker-engine
+service docker start
+docker run hello-world
+```
+
+* to provision concourse (as per [these instructions](http://concourse.ci/docker-repository.html)):
+
+* put a `docker-compose` file like the one in `build/concourse/docker-compose.yml` on the file system of the managed node you want to provision with councourse
+
+* generate ssh keys with:
+
+``` shell
+mkdir -p keys/web keys/worker
+ssh-keygen -t rsa -f ./keys/web/tsa_host_key -N ''
+ssh-keygen -t rsa -f ./keys/web/session_signing_key -N ''
+ssh-keygen -t rsa -f ./keys/worker/worker_key -N ''
+cp ./keys/worker/worker_key.pub ./keys/web/authorized_worker_keys
+cp ./keys/web/tsa_host_key.pub ./keys/worker
+```
+* configure an ip address at which you want your `web` node to be reachable
+* assuming you want that address to be `192.168.99.100`, run:
+
+``` shell
+export CONCOURSE_EXTERNAL_URL=http://192.168.99.100:8080
+```
+
+* spin up concourse with:
+
+``` shell
+docker-compose up
+```
+
+* you can now log into concourse at 192.168.99.100:8080 with username `concourse` and password `changeme`
+
+* some sample build pipeline configurations:
+  * [deploy a rails app if tests pass](http://concourse.ci/flight-school.html)
+  * [worker with two controllers and integration tests](http://concourse.ci/pipelines.html)
+  * [tutorial with increasingly complex pipelines](https://github.com/starkandwayne/concourse-tutorial)
