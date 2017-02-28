@@ -1,0 +1,14 @@
+# usage:
+
+# on a control machine:
+# - store the contents of this file in /etc/ansible/hosts
+# - store an ssh key authorized for managed nodes in ~/.ssh
+# - (optionally): specify Host/HostName/User/IdentityFile in ~/.ssh/config
+
+# on a managed node:
+# - add an ssh key from the control machine to the `authorized_keys` of the managed node
+# - (optionally): add your user and give it sudo privs on the node
+
+# concourse-00
+37.218.247.49
+
