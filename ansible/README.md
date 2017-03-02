@@ -23,6 +23,13 @@ password: <REDACTED>
 # On managed node:
 
 * ssh into box created in step 0 as root (or use the console that pops up after creating box)
+
+* install sudo:
+
+``` abap
+apt install sudo
+```
+
 * create a user for yourself with:
 
 ``` shell
@@ -146,6 +153,13 @@ $ ansible all -m ping
 # 4. Provision a box to run concourse (TODO)
 
 The following steps are required to manually provision a box to run [concourse.ci](https://concourse.ci/introduction.html). Let's write a [playbook](http://docs.ansible.com/ansible/playbooks_intro.html) to do it with ansible instead!
+
+* upgrade the debian packages on the box (necessary to be able to reinstall the kernel):
+
+``` abap
+sudo apt update
+sudo apt upgrade
+```
 
 * figure out which version of the linux kernel you're running:
 
