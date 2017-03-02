@@ -65,6 +65,12 @@ visudo
 $ ssh-keygen -t ed25519 -o -a 100 -f ~/.ssh/id_<name_of_key>
 ```
 
+* If you have not already added your ssh key to the list of authorized keys (ie: if you did not create the box), copy it from your local machine with:
+
+``` shell
+$ ssh-copy-id -i ~/.ssh/id_<name_of_key> <username>@<ip_address>
+```
+
 * If you do not already have a way of storing your ssh key password in a keyring to avoid re-entering its password every time you want to use it, you can use this:
 
 ``` shell
