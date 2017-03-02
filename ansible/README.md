@@ -197,6 +197,14 @@ service docker start
 docker run hello-world
 ```
 
+* to install `docker-compose` (as per [these instructions](https://docs.docker.com/compose/install/)), run:
+
+``` shell
+curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+chmod +x /usr/local/bin/docker-compose
+```
+
 * to provision concourse (as per [these instructions](http://concourse.ci/docker-repository.html)):
 
 * put a `docker-compose` file like the one in `build/concourse/docker-compose.yml` on the file system of the managed node you want to provision with councourse
